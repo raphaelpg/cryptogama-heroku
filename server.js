@@ -61,6 +61,18 @@ app.get('/', (req, res) => {
 	res.sendFile('./client/build', 'index.html');
 })
 
+//INFORM CONTRACTS ADDRESSES
+app.get('/api/data', (req, res) => {
+	const data = {
+		status: 'connected',
+		serverAddress: serverAddress,
+		swapContractAddress: swapContractAddress,
+		alyContractAddress: alyContractAddress,
+		daiContractAddress: daiContractAddress
+	}
+	res.json(data);
+});
+
 //INFORM SERVER STATUS
 app.get('/api/hello', (req, res) => {
   res.send({ express: 'connected' });
@@ -86,17 +98,6 @@ app.get('/api/DAIContractAddress', (req, res) => {
   res.send({ express: daiContractAddress });
 });
 
-//INFORM CONTRACTS ADDRESSES
-app.get('/api/data', (req, res) => {
-	const data = {
-		status: 'connected',
-		serverAddress: serverAddress,
-		swapContractAddress: swapContractAddress,
-		alyContractAddress: alyContractAddress,
-		daiContractAddress: daiContractAddress
-	}
-	res.json(data);
-});
 
 //SEND TRADE HISTORY DATA
 app.get('/api/tradeHistory', (req, res) => {

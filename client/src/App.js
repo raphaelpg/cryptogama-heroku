@@ -29,8 +29,7 @@ import BuyForm from './components/BuyForm';
 import SellForm from './components/SellForm';
 
 //IMPORT FUNCTIONS
-import * as utils from './utils/serverInteractionsFunctions';
-import { displayOrderBook, displayTradeHistory, getTradeGraphData, updateTradeGraphData, getUserBalance } from './utils/serverInteractionsFunctions';
+import { getServerData, displayOrderBook, displayTradeHistory, getTradeGraphData, updateTradeGraphData, getUserBalance } from './utils/serverInteractionsFunctions';
 
 //IMPORT CSS AND TOKENS LOGOS
 import './App.css';
@@ -71,37 +70,21 @@ class App extends Component {
       DAIBalance: 0,
       displayFaucet: false,
     }
+    this.getServerData = getServerData.bind(this);
     this.displayOrderBook = displayOrderBook.bind(this);
     this.displayTradeHistory = displayTradeHistory.bind(this);
     this.getTradeGraphData = getTradeGraphData.bind(this);
     this.updateTradeGraphData = updateTradeGraphData.bind(this);
     this.getUserBalance = getUserBalance.bind(this);
+    
+    this.getServerData();
     this.getTradeGraphData();
-
   }
 
   //DAPP CONFIGURATION
   componentDidMount = async () => {
     try {
-      //SET SWAP CONTRACT ADDRESS TO STATE
-      utils.getSwapContractAddress()
-      .then(res => this.setState({ swapAlyContractAddress: res.express }))
-      .catch(err => console.log(err));
-
-      //SET ALY CONTRACT ADDRESS TO STATE
-      utils.getALYContractAddress()
-      .then(res => this.setState({ tokenAlyContractAddress: res.express }))
-      .catch(err => console.log(err));
-
-      //SET DAI CONTRACT ADDRESS TO STATE
-      utils.getDAIContractAddress()
-      .then(res => this.setState({ tokenDaiContractAddress: res.express }))
-      .catch(err => console.log(err));
-
-      //GET NETWORK PROVIDER AND WEB3 INSTANCE
       const web3 = await getWeb3();
-
-      //GET USER'S ACCOUNTS
       const accounts = await web3.eth.getAccounts();
 
       const instanceTokenAly = new web3.eth.Contract(
@@ -128,58 +111,40 @@ class App extends Component {
         swapAlyContract: instanceSwapAly,
       })
     } catch (error) {
-      //CATCH ERRORS
       alert(
         `No wallet detected.\nAdd a crypto wallet such as Metamask to your browser.`,
       );
       console.error(error);
     } finally {
-      //SET SERVER STATUS TO STATE
-      this.setState({ serverStatus: "disconnected" });
-      utils.callApi()
-        .then(res => this.setState({ serverStatus: res.express }))
-        .catch(err => console.log(err));
-
-      //SET SWAP CONTRACT OWNER ADDRESS TO STATE
-      utils.getSwapContractOwner()
-        .then(res => this.setState({ swapAlyOwner: res.express }))
-        .catch(err => console.log(err));
-
-      //DISPLAY DATA
       this.displayOrderBook();
       this.displayTradeHistory();
 
-      //LISTEN TO CONTRACTS EVENTS:
-
-      if (this.state.web3) {
-        //GET USER BALANCE
-        this.getUserBalance();
+      this.getUserBalance();
         
-        //ALY ERC-20 APPROVE EVENT
-        this.state.tokenAlyContract.events.Transfer({ fromBlock: 'latest', toBlock: 'latest' },
-        async (error, event) => {
-          console.log("Transfer ALY: ",event)
-          this.displayOrderBook()
-          this.getUserBalance()
-        })
+      //ALY ERC-20 APPROVE EVENT
+      this.state.tokenAlyContract.events.Transfer({ fromBlock: 'latest', toBlock: 'latest' },
+      async (error, event) => {
+        console.log("Transfer ALY: ",event)
+        this.displayOrderBook()
+        this.getUserBalance()
+      })
 
-        //DAI ERC-20 APPROVE EVENT
-        this.state.tokenDaiContract.events.Transfer({ fromBlock: 'latest', toBlock: 'latest' },
-        async (error, event) => {
-          console.log("Transfer DAI: ",event)
-          this.displayOrderBook()
-          this.getUserBalance()
-        })
+      //DAI ERC-20 APPROVE EVENT
+      this.state.tokenDaiContract.events.Transfer({ fromBlock: 'latest', toBlock: 'latest' },
+      async (error, event) => {
+        console.log("Transfer DAI: ",event)
+        this.displayOrderBook()
+        this.getUserBalance()
+      })
 
-        //SWAP CONTRACT EVENT, TRIGGER UPDATE USER BALANCE, UPDATE ORDERBOOK, UPDATE TRADE HISTORY
-        this.state.swapAlyContract.events.TokenExchanged({ fromBlock: 'latest', toBlock: 'latest'},
-        async (error, event) => {
-          this.getUserBalance()
-          this.displayOrderBook()
-          this.displayTradeHistory()
-          this.updateTradeGraphData() 
-        })
-      }
+      //SWAP CONTRACT EVENT, TRIGGER UPDATE USER BALANCE, UPDATE ORDERBOOK, UPDATE TRADE HISTORY
+      this.state.swapAlyContract.events.TokenExchanged({ fromBlock: 'latest', toBlock: 'latest'},
+      async (error, event) => {
+        this.getUserBalance()
+        this.displayOrderBook()
+        this.displayTradeHistory()
+        this.updateTradeGraphData() 
+      })
     }
   }
 

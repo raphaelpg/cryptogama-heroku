@@ -1,46 +1,18 @@
-//GET SERVER STATUS
-export async function callApi() {
-  const response = await fetch('/api/hello');
-  const serverConnect = await response.json();
-  if (response.status !== 200) throw Error(serverConnect.message);
-  
-  return serverConnect;
-}
+//GET SERVER DATA
+export async function getServerData() {
+  const response = await fetch('/api/data');
+  const serverData = await response.json();
+  if (response.status !== 200) throw Error(serverData.message);
 
-//GET SWAP CONTRACT OWNER
-export async function getSwapContractOwner() {
-  const responseSwapOwner = await fetch('/api/swapContractOwner');
-  const swapOwner = await responseSwapOwner.json();
-  if (responseSwapOwner.status !== 200) throw Error(swapOwner.message);
-  
-  return swapOwner;
-}
-
-//GET SWAP CONTRACT ADDRESS
-export async function getSwapContractAddress() {
-  const responseSwap = await fetch('/api/swapContractAddress');
-  const swapAddress = await responseSwap.json();
-  if (responseSwap.status !== 200) throw Error(swapAddress.message);
-  
-  return swapAddress;
-}
-
-//GET ALY CONTRACT ADDRESS
-export async function getALYContractAddress() {
-  const responseALY = await fetch('/api/ALYContractAddress');
-  const ALYAddress = await responseALY.json();
-  if (responseALY.status !== 200) throw Error(ALYAddress.message);
-  
-  return ALYAddress;
-}
-
-//GET DAI CONTRACT ADDRESS
-export async function getDAIContractAddress() {
-  const responseDAI = await fetch('/api/DAIContractAddress');
-  const DAIAddress = await responseDAI.json();
-  if (responseDAI.status !== 200) throw Error(DAIAddress.message);
-  
-  return DAIAddress;
+  if (serverData){
+    this.setState({
+      serverStatus: serverData['status'],
+      serverStaswapAlyOwnertus: serverData['serverAddress'],
+      swapAlyContractAddress: serverData['swapContractAddress'],
+      tokenAlyContractAddress: serverData['alyContractAddress'],
+      tokenDaiContractAddress: serverData['daiContractAddress'],
+    })
+  }
 }
 
 //GET ORDERBOOK DATA
@@ -217,15 +189,22 @@ export async function checkOrders() {
 
 //GET USER'S TOKEN BALANCES
 export async function getUserBalance() {
-  const { accounts, tokenAlyContract, tokenDaiContract } = this.state;
+  try{
+    const { accounts, tokenAlyContract, tokenDaiContract } = this.state;
 
-  //RETRIEVE USER ALY AND DAI BALANCES
-  let TempALYBalance = await tokenAlyContract.methods.balanceOf(accounts[0]).call();
-  let TempDAIBalance = await tokenDaiContract.methods.balanceOf(accounts[0]).call();
-  this.setState({
-    ALYBalance: (TempALYBalance/100).toFixed(2),
-    DAIBalance: (TempDAIBalance/100).toFixed(2)
-  })
+    //RETRIEVE USER ALY AND DAI BALANCES
+    let TempALYBalance = await tokenAlyContract.methods.balanceOf(accounts[0]).call();
+    let TempDAIBalance = await tokenDaiContract.methods.balanceOf(accounts[0]).call();
+    this.setState({
+      ALYBalance: (TempALYBalance/100).toFixed(2),
+      DAIBalance: (TempDAIBalance/100).toFixed(2)
+    })
+  } catch (error) {
+    alert(
+      `No wallet detected.\nAdd a crypto wallet such as Metamask to your browser.`,
+    );
+    console.error(error);
+  }
 }
 
 //TWO DECIMALS NUMBER FORMAT
