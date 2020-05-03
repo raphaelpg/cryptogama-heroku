@@ -26,7 +26,7 @@ contract TokenERC20Dai is ERC20, Ownable {
     }
 
     function getTokens(uint256 amount) public {
-        require(amount <= 100000, "Required amount must be less than 100000");
+        require(amount <= 10000000, "Required amount must be less than 100000");
         uint256 executionTime = now;
         require(executionTime >= lastExecutionTime + 2 * 1 minutes, "Function can be called every two minutes only, wait");
 

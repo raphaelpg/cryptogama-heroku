@@ -90,7 +90,7 @@ contract("TokenERC20Aly", function(accounts){
         console.log("Testing getTokens() function:");
 
         //Verify can't get more than 10 000 ALY per call. 
-        await expectRevert(this.TokenERC20AlyInstance.getTokens(10001, {from: spender}),"Required amount must be less than 10000");
+        await expectRevert(this.TokenERC20AlyInstance.getTokens(1000001, {from: spender}),"Required amount must be less than 10000");
         
         let spenderBalanceBefore = await this.TokenERC20AlyInstance.balanceOf(spender);
         console.log("Spender's balance: ", parseInt(spenderBalanceBefore));
@@ -200,7 +200,7 @@ contract("TokenERC20Dai", function(accounts){
         console.log("Testing getTokens() function:");
 
         //Verify can't get more than 100 000 DAI per call. 
-        await expectRevert(this.TokenERC20DaiInstance.getTokens(100001, {from: spender}),"Required amount must be less than 100000");
+        await expectRevert(this.TokenERC20DaiInstance.getTokens(10000001, {from: spender}),"Required amount must be less than 100000");
         
         let spenderBalanceBefore = await this.TokenERC20DaiInstance.balanceOf(spender);
         console.log("Spender's balance: ", parseInt(spenderBalanceBefore));
