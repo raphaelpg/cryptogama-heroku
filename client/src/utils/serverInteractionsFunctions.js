@@ -157,7 +157,9 @@ export async function getTradeGraphData() {
   for (let i=0; i<tradeHistoryEntire['tradeHistory']['trades'].length; i++){
     tradeGraph.unshift([ tradeHistoryEntire['tradeHistory']['trades'][i].epoch, tradeHistoryEntire['tradeHistory']['trades'][i].price ])
   }
-  this.state.tradeGraph = tradeGraph;
+  // this.state.tradeGraph = tradeGraph;
+  this.setState ({ tradeGraph: tradeGraph });
+  window.graphComponent.updateGraph();
 }
 
 //UPDATE TRADE GRAPH DATA

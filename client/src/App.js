@@ -119,6 +119,7 @@ class App extends Component {
       this.displayOrderBook();
       this.displayTradeHistory();
 
+      if (this.state.web3) {
       this.getUserBalance();
         
       //ALY ERC-20 APPROVE EVENT
@@ -146,15 +147,16 @@ class App extends Component {
         this.updateTradeGraphData() 
       })
     }
+    }
   }
 
 
   //3.RENDER
 
   render() {
-    if (!this.state.web3) {
-      return <div>Loading Web3, accounts, and contract...</div>;
-    }
+    // if (!this.state.web3) {
+    //   return <div>Loading Web3, accounts, and contract...</div>;
+    // }
 
     return (
       <div className="App">
