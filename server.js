@@ -325,7 +325,10 @@ app.get('/api/swap',async (req, res) => {
 	})
 });
 
-
+//HEROKU CHECK
+if (process.env.NODE_ENV === 'production') {
+	app.use(express.static('client/build'));
+}
 
 //5.START SERVER
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
