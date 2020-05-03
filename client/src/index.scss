@@ -1,0 +1,544 @@
+/*VARIABLES SETUP*/
+  $orangeGama: darkorange;
+  $darkBackground: #1D1D1D;
+  $secondGrey: #353535;
+  $fontColor: #ADA2B0;
+  $fontFamily: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+      "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+      sans-serif;
+
+/*GLOBAL*/
+  .App {
+    text-align: center;
+  }
+
+  body {
+    font-family: $fontFamily;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: #262626;
+    color: $fontColor;
+    text-transform: uppercase;
+  }
+
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+      monospace;
+  }
+
+  ::selection {
+      background-color: $darkBackground;
+      color: $orangeGama;
+  }
+
+  button {
+    text-transform: uppercase;
+  }
+
+  table {
+    margin: auto;
+    font-weight: normal;
+    width: -webkit-fill-available;
+    background-color: $darkBackground;
+    table-layout: auto;
+  }
+
+  table tr{
+    display: flex;
+    justify-content: space-between;
+    margin: 0px 0px 0px 0px;
+  }
+
+  table, th, td {
+    border-collapse: collapse;
+  }
+
+  th, td {
+    text-align: right;
+  }
+
+  table th{
+    font-weight: normal;
+  }
+
+  tbody{
+    display: table-cell;
+    overflow-y: auto;
+  }
+
+  tr{
+    transition: all 0.2s;
+  }
+
+  tr:hover{
+    background-color: $orangeGama;
+    color: $darkBackground;
+  }
+
+  ::-webkit-scrollbar{
+    width: 7px;
+  }
+
+  ::-webkit-scrollbar-track{
+    webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  }
+
+  ::-webkit-scrollbar-thumb{
+    background-color: $darkBackground;
+    border-radius: 7px;
+    transition: all 0.4s;
+  }
+
+  ::-webkit-scrollbar-thumb:hover{
+    background-color: $secondGrey;
+  }
+
+/*HEADER*/
+  .Header {
+    display: inline-flex;
+    justify-content: space-between;
+    width: 100%;
+    border-bottom: 0.5px solid $orangeGama;
+  }
+
+  .Title {
+    margin-left: 10px;
+    color: $orangeGama;
+    font-size: 36px;
+  }
+
+  .description {
+    font-size: medium;
+    margin: auto auto 30px 25px;
+  }
+
+  .ServerStatus {
+    margin-right: 2%;
+    margin-top: 2%;
+    color: $orangeGama;
+  }
+
+  .ServerStatusTitle {
+    color: $fontColor;
+  }
+
+
+/*NAVBAR*/
+  .navbar{
+    display: flex;
+    justify-content: space-between;
+    height: 50px;
+    background-color: $secondGrey;
+    margin-bottom: 10px;
+    padding: 10px;
+  }
+
+  .tokenSelector {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+  }
+
+  .balance{
+    margin-right: 10px;
+    text-align: end;
+  }
+
+  .balanceTitle{
+    font-size: medium;
+  }
+
+  .currency{
+    display: inline-flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+  }
+
+  .pairTitle{
+    font-size: medium;
+    margin-bottom: 30px;
+    margin-left: 10px;
+  }
+
+  .logoALY{
+    width: 30px;
+  }
+
+  .ALYnumber{
+    margin-top: 7px;
+    margin-left: 3px;
+  }
+
+  .logoDAI{
+    width: 25px;
+    margin-left: 15px;
+    margin-top: 3px;
+  }
+
+  .DAInumber{
+    margin-top: 7px;
+    margin-left: 3px;
+  }
+
+
+/*MAIN*/
+  .Main {
+    display: flex;
+    justify-content: center;
+    height: 600px;
+  }
+
+  /*MAIN LEFT*/
+    .MainLeft{
+      width: 300px;
+      border: 1px solid $secondGrey; 
+      height: 100%;
+    }
+
+
+    /*TRADE HISTORY*/
+    .tradeHistoryTitle{
+      font-size: 12px;
+      text-align: left;
+      margin-top: 5px;
+      margin-bottom: 4px;
+      margin-left: 5px;
+    }
+
+    #tradeHistoryTable{
+      height: 578px;
+    }
+
+    #tradeHistoryBody{
+      display: block;
+      height: 100%;
+      overflow-y: auto;
+      vertical-align: top;
+    }
+
+    .newTradePrice{
+      width: 50px;
+    }
+
+    .newTradeVolume{
+      width: 50px;
+    }
+
+    .newTradeTimestamp{
+      width: 150px;
+      margin-right: 15px;
+    }
+
+  /*MAIN CENTER*/
+    .MainCenter{
+      width: 40%;
+      border: 1px solid $secondGrey;
+      margin-left: 8px;
+      margin-right: 8px;
+    }
+
+    .graph{
+      height: 280px;
+      background-color: $darkBackground;
+    }
+
+    .highcharts-container{
+      background-color: $darkBackground;
+    }
+
+    .tbd{
+      text-align: center;
+      padding-top: 150px;
+    }
+
+    .buySellToken{
+      display: flex;
+      justify-content: space-evenly;
+      border-top: 1px solid $secondGrey;
+      border-bottom: 1px solid $secondGrey;
+    }
+
+    .buyToken{
+      padding: 3%;
+      width: -webkit-fill-available;
+    }
+
+    .buyTokenTitle{
+      text-align: left;
+      font-size: medium;
+      margin-bottom: 10px;
+    }
+
+    .buyTokenForm{
+      text-align: right;
+    }
+
+    .buyFields{
+      display: flex;
+      justify-content: space-between;
+    }
+
+    input{
+      width: 100px;
+      background-color: $darkBackground;
+      border: 1px solid $secondGrey;
+      color: white;
+      font-family: $fontFamily;
+    }
+
+    .inputFields{
+      -webkit-appearance:none!important;
+        border-right:0px;
+        outline:none;
+        width:80px;
+    }
+
+    .inputFields2{
+      -webkit-appearance:none!important;
+        text-align:right;
+        width:45px;
+        border-left:0px;
+        margin:0 0 0 -7px;
+        color: $fontColor;
+    }
+
+    .inputFields:selected{
+      background-color: $darkBackground;
+      border: 1px solid $secondGrey;
+      color: white;
+    }
+
+    input:-internal-autofill-selected {
+      background-color: $darkBackground !important;
+      background-image: none !important;
+      color: white;
+    }
+
+    #priceBuy{
+      background-color: $darkBackground !important;
+    }
+
+    .buyTokenButton{
+      margin-top: 10px;
+      background-color: $darkBackground;
+      border: 1px solid $secondGrey;
+      color: $fontColor;
+      transition: all 0.2s;
+      cursor: pointer;
+      outline: none;
+      width: 90px;
+    }
+
+    .buyTokenButton:hover{
+      background-color: $orangeGama;
+      color: $darkBackground;
+    }
+
+    .yourOrders{
+      text-align: left;
+      margin: 10px;
+      font-size: medium;
+    }
+
+    .userOrders{
+      background-color: $darkBackground;
+      height: 60px;
+    }
+
+
+  /*MAIN RIGHT*/
+    .MainRight{
+      width: 300px;
+      height: 100%;
+      border: 1px solid $secondGrey;
+    }
+
+    .sectionOrderBook{
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .orderBookTitles{
+      display: inline-flex;
+      justify-content: space-around;
+      margin-top: 4px;
+      margin-bottom: 4px;
+    }
+
+    #bids{
+      height: 278.5px;
+      vertical-align: bottom;
+    }
+
+    #asks{
+      height: 278.5px;
+    }
+
+    #orderBookAsksBody{
+      vertical-align: bottom;
+      height: 100%;
+      /*display: block;*/
+      overflow-y: auto;
+    }
+
+    #orderBookBidsBody{
+      vertical-align: top;
+      height: 100%;
+      display: block;
+      overflow-y: auto;
+    }
+
+    .newOrderPriceAsk{
+      width: 75px;
+      color: indianred;
+    }
+
+    .newOrderPriceBid{
+      width: 75px;
+      color: lawngreen;
+    }
+
+    .newOrderVolume{
+      width: 75px;
+    }
+
+    .newOrderTotal{
+      width: 100px;
+      margin-right: 25px;
+    }
+
+    .orderBookPrice{
+      font-size: large;
+      text-align: left;
+      margin-left: 15px;
+      margin-top: 0px;
+      margin-bottom: 0px;
+    }
+
+
+/*FAUCET*/
+  .balanceAndFaucet{
+    display: flex;
+  }
+
+  .displayFaucetButton{
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    width: 200px;
+    height: 50px;
+    background-color: $darkBackground;
+    color: $orangeGama;
+    border: 1px solid $orangeGama;
+    border-radius: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: $fontFamily;
+    outline: none;
+    transition: all 0.2s;
+  }
+
+  .displayFaucetButton:hover{
+    background-color: $orangeGama;
+    color: $darkBackground;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+  }
+
+  .faucet{
+    width: 500px;
+    height: 330px;
+    background-color: $darkBackground;
+    border: solid 1px $orangeGama;
+    z-index: 99999;
+    position: absolute;
+    margin: 0 0 0 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 15px;
+  }
+
+  .closeFaucetButton{
+    position: absolute;
+    background-color: $darkBackground;
+    color: $fontColor;
+    border: none;
+    top:1%;
+    right: 1%;
+    font-size: 15px;
+    text-transform: lowercase;
+    outline: none;
+  }
+
+  .closeFaucetButton:hover{
+    color: $orangeGama;
+    cursor: pointer;
+  }
+
+  .faucetTitle{
+    text-align: left;
+    font-size: 20px;
+    padding: 0 0 0 25px;
+    color: $orangeGama;
+  }
+
+  .faucet label{
+    margin: auto 0;
+  }
+
+  .faucetForm{
+    text-align: left;
+    margin: 30px 0px 0px 40px;
+    padding: 0 0 0 0;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .faucetFormInput{
+    margin: 0 110px 0 0;
+  }
+
+  input[type=number]::-webkit-outer-spin-button,
+  input[type=number]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+  }
+
+  input[type=number] {
+      -moz-appearance:textfield;
+      background-color: $secondGrey;
+  }
+
+  .getTokenButton{
+    background-color: $darkBackground;
+    border: 1px solid $secondGrey;
+    color: $fontColor;
+    transition: all 0.2s;
+    outline: none;
+    cursor: pointer;
+    width: 90px;
+  }
+
+  .getTokenButton:hover{
+    background-color: $orangeGama;
+    color: $darkBackground;
+  }
+
+  .faucetComments{
+    text-align: left;
+    margin: 40px;
+    font-size: 12px;
+  }
+
+  .faucetAdvice{
+    color: $orangeGama;
+  }
+
+  .faucetALYContract{
+    margin: 10px 0 10px 0;
+  }
