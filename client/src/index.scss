@@ -42,7 +42,7 @@
   table {
     margin: auto;
     font-weight: normal;
-    width: -webkit-fill-available;
+    width: 100%;
     background-color: $darkBackground;
     table-layout: auto;
   }
@@ -197,6 +197,7 @@
       width: 300px;
       border: 1px solid $secondGrey; 
       height: 100%;
+      overflow-y: hidden;
     }
 
 
@@ -264,7 +265,7 @@
 
     .buyToken{
       padding: 3%;
-      width: -webkit-fill-available;
+      width: 100%;
     }
 
     .buyTokenTitle{
