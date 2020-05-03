@@ -46,7 +46,7 @@ const swapContractInstance = new web3.eth.Contract(
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
 const cors = require('cors');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -82,6 +82,18 @@ app.get('/api/ALYContractAddress', (req, res) => {
 //INFORM DAI CONTRACT ADDRESS
 app.get('/api/DAIContractAddress', (req, res) => {
   res.send({ express: daiContractAddress });
+});
+
+//INFORM CONTRACTS ADDRESSES
+app.get('/api/data', (req, res) => {
+	const data = {
+		status: 'connected',
+		serverAddress: serverAddress,
+		swapContractAddress: swapContractAddress,
+		alyContractAddress: alyContractAddress,
+		daiContractAddress: daiContractAddress
+	}
+	res.json(data);
 });
 
 //SEND TRADE HISTORY DATA
