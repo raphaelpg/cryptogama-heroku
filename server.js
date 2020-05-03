@@ -52,11 +52,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({origin: '*'}));
 
+app.use(express.static('./client/build'));
 
 //2.SEND DATA TO CLIENT
 
 app.get('/', (req, res) => {
-	res.send('Cryptogama server');
+	// res.send('Cryptogama server');
+	res.sendFile('./client/build', 'index.html');
 })
 
 //INFORM SERVER STATUS
@@ -337,10 +339,6 @@ app.get('/api/swap',async (req, res) => {
 	})
 });
 
-//HEROKU CHECK
-if (process.env.NODE_ENV === 'production') {
-	app.use(express.static('client/build'));
-}
 
 //5.START SERVER
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
