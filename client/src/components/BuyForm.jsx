@@ -38,7 +38,7 @@ class BuyForm extends Component {
 
 	//SEND BUY ORDER TO SERVER
 	buyOrder = async (_volume, _price) => {
-		const { serverStatus, accounts, swapAlyContractAddress, tokenDaiContract, tokenDaiContractAddress } = this.props;
+		const { serverStatus, accounts, swapContractAddress, tokenDaiContract, tokenDaiContractAddress } = this.props;
 
 		//CHECK THAT SERVER IS LIVE
 		if (serverStatus !== "disconnected") {
@@ -53,7 +53,7 @@ class BuyForm extends Component {
 			  let volumeToApprove = total;
 
 			  //EXECUTE APPROVAL TO THE TOKEN CONTRACT
-			  await tokenDaiContract.methods.transfer(swapAlyContractAddress, volumeToApprove*100).send({from: accounts[0]})
+			  await tokenDaiContract.methods.transfer(swapContractAddress, volumeToApprove*100).send({from: accounts[0]})
 
 			  //SEND ORDER TO SERVER
 			  await fetch('/api/insert', {

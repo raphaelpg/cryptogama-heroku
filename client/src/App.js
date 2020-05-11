@@ -15,7 +15,7 @@ import getWeb3 from './getWeb3';
 //IMPORT ERC20 TOKEN CONTRACTS
 import TokenERC20AlyContract from './contracts/TokenERC20Aly.json';
 import TokenERC20DaiContract from './contracts/TokenERC20Dai.json';
-import SwapAlyContract from './contracts/SwapAly.json';
+import SwapContract from './contracts/CryptogamaSwap.json';
 
 //IMPORT COMPONENTS
 import Header from './components/Header';
@@ -45,9 +45,9 @@ class App extends Component {
     this.state = { 
       web3: null,
       accounts: null,
-      swapAlyContract: null,
-      swapAlyOwner: null,
-      swapAlyContractAddress: null,
+      swapContract: null,
+      SwapContractOwner: null,
+      swapContractAddress: null,
       tokenAlyContract: null,
       tokenAlyContractAddress: null,
       tokenDaiContract: null,
@@ -98,8 +98,8 @@ class App extends Component {
       );
 
       const instanceSwapAly = new web3.eth.Contract(
-        SwapAlyContract.abi,
-        this.state.swapAlyContractAddress,
+        SwapContract.abi,
+        this.state.swapContractAddress,
       );
 
       //SET PARAMETERS TO THE STATE
@@ -108,7 +108,7 @@ class App extends Component {
         accounts, 
         tokenAlyContract: instanceTokenAly,
         tokenDaiContract: instanceTokenDai,
-        swapAlyContract: instanceSwapAly,
+        swapContract: instanceSwapAly,
       })
     } catch (error) {
       alert(
@@ -139,7 +139,7 @@ class App extends Component {
       })
 
       //SWAP CONTRACT EVENT, TRIGGER UPDATE USER BALANCE, UPDATE ORDERBOOK, UPDATE TRADE HISTORY
-      this.state.swapAlyContract.events.TokenExchanged({ fromBlock: 'latest', toBlock: 'latest'},
+      this.state.swapContract.events.TokenExchanged({ fromBlock: 'latest', toBlock: 'latest'},
       async (error, event) => {
         this.getUserBalance()
         this.displayOrderBook()
@@ -192,7 +192,7 @@ class App extends Component {
                 serverStatus = { this.state.serverStatus }
                 bestSellerPrice = { this.state.bestSellerPrice }
                 accounts = { this.state.accounts }
-                swapAlyContractAddress = { this.state.swapAlyContractAddress }
+                swapContractAddress = { this.state.swapContractAddress }
                 tokenDaiContract = { this.state.tokenDaiContract }
                 tokenDaiContractAddress = { this.state.tokenDaiContractAddress }
               />
@@ -200,7 +200,7 @@ class App extends Component {
                 serverStatus = { this.state.serverStatus }
                 bestSellerPrice = { this.state.bestSellerPrice }
                 accounts = { this.state.accounts }
-                swapAlyContractAddress = { this.state.swapAlyContractAddress }
+                swapContractAddress = { this.state.swapContractAddress }
                 tokenAlyContract = { this.state.tokenAlyContract }
                 tokenAlyContractAddress = { this.state.tokenAlyContractAddress }
               />

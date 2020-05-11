@@ -14,7 +14,7 @@ const provider = new HDWalletProvider(seed, ropstenProvider);
 const web3 = new Web3(provider);
 
 //GET CONTRACTS ABI
-const SwapJSON = require("./build/contracts/SwapAly.json");
+const SwapJSON = require("./build/contracts/CryptogamaSwap.json");
 const TokenALYJSON = require("./build/contracts/TokenERC20Aly.json");
 const TokenDAIJSON = require("./build/contracts/TokenERC20Dai.json");
 

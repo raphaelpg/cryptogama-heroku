@@ -9,7 +9,7 @@ import "./TokenERC20Dai.sol";
 /// @author Raphael Pinto Gregorio
 /// @notice Use this contract to swap ERC-20 tokens
 /// @dev The owner of this contract need to get the approval from both token owners to be able to proceed the swap
-contract SwapAly is Ownable {
+contract CryptogamaSwap is Ownable {
     address payable private _owner;
 
     event TokenExchanged(address indexed from, address indexed to, uint256 amountSold, uint256 amountBought);
@@ -49,7 +49,6 @@ contract SwapAly is Ownable {
         uint256 DAIbalance = TokenDAI.balanceOf(address(this));
 
         _owner.transfer(ETHbalance);
-        // _owner.call.value(ETHbalance)("");
         if (ALYbalance > 0) {
             TokenALY.transfer(_owner, ALYbalance);
         }

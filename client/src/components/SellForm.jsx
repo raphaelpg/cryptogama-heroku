@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { checkOrders, fixRounding } from '../utils/serverInteractionsFunctions'; 
 
-class BuyForm extends Component {
+class SellForm extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
@@ -38,7 +38,7 @@ class BuyForm extends Component {
 
 	//SEND SELL ORDER TO SERVER
 	sellOrder = async (_volume, _price) => {
-	  const { serverStatus, accounts, swapAlyContractAddress, tokenAlyContract, tokenAlyContractAddress } = this.props;
+	  const { serverStatus, accounts, swapContractAddress, tokenAlyContract, tokenAlyContractAddress } = this.props;
 
 	  //CHECK THAT SERVER IS LIVE
 		if (serverStatus !== "disconnected") {
@@ -51,7 +51,7 @@ class BuyForm extends Component {
 		    this.state.pushedOrder = {'type': 'ask', 'price': _price, 'volume': _volume, 'total': total, 'seller': accounts[0], 'tokenContractAddress': tokenAlyContractAddress};
 
 		    //EXECUTE APPROVAL TO THE TOKEN CONTRACT
-		    await tokenAlyContract.methods.transfer(swapAlyContractAddress, _volume*100).send({from: accounts[0]});
+		    await tokenAlyContract.methods.transfer(swapContractAddress, _volume*100).send({from: accounts[0]});
 
 		    //SEND ORDER TO SERVER
 		    await fetch('/api/insert', {
@@ -129,4 +129,4 @@ class BuyForm extends Component {
 	}
 }
 
-export default BuyForm;
+export default SellForm;

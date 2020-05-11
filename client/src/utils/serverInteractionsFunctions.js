@@ -7,8 +7,8 @@ export async function getServerData() {
   if (serverData){
     this.setState({
       serverStatus: serverData['status'],
-      serverStaswapAlyOwnertus: serverData['serverAddress'],
-      swapAlyContractAddress: serverData['swapContractAddress'],
+      SwapContractOwner: serverData['serverAddress'],
+      swapContractAddress: serverData['swapContractAddress'],
       tokenAlyContractAddress: serverData['alyContractAddress'],
       tokenDaiContractAddress: serverData['daiContractAddress'],
     })

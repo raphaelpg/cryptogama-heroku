@@ -11,7 +11,7 @@ const Web3 = require("web3");
 const fs = require('fs');
 
 //IMPORT CONTRACTS
-const SwapALYJSON = require("./build/contracts/SwapAly.json");
+const SwapJSON = require("./build/contracts/CryptogamaSwap.json");
 const TokenALYJSON = require("./build/contracts/TokenERC20Aly.json");
 const TokenDAIJSON = require("./build/contracts/TokenERC20Dai.json");
 
@@ -29,8 +29,8 @@ const deploySwap = async () => {
   console.log('Attempting to deploy Swap contract from account', accounts[0]);
 
   //DEPLOY SWAP CONTRACT
-  const resultSwap = await new web3.eth.Contract(SwapALYJSON.abi)
-    .deploy({data: SwapALYJSON.bytecode})
+  const resultSwap = await new web3.eth.Contract(SwapJSON.abi)
+    .deploy({data: SwapJSON.bytecode})
     .send({gas:'1000000', from: accounts[0]})
     .catch(error => {
 			console.log("Cryptogama deployment error: ", error)

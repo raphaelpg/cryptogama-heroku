@@ -1,6 +1,6 @@
 const { BN, ether, expectRevert } = require("@openzeppelin/test-helpers");
 const { expect } = require("chai");
-const SwapAly = artifacts.require("SwapAly");
+const CryptogamaSwap = artifacts.require("CryptogamaSwap");
 const TokenERC20Aly = artifacts.require("TokenERC20Aly");
 const TokenERC20Dai = artifacts.require("TokenERC20Dai");
 
@@ -273,7 +273,7 @@ contract("TokenERC20Dai", function(accounts){
 });
 
 
-contract("SwapAly", function(accounts){
+contract("CryptogamaSwap", function(accounts){
     const contractOwner = accounts[0];
     const seller = accounts[1];
     const buyer = accounts[2];
@@ -283,16 +283,16 @@ contract("SwapAly", function(accounts){
     beforeEach(async function() {
         this.TokenERC20AlyInstance = await TokenERC20Aly.new({from: seller});
         this.TokenERC20DaiInstance = await TokenERC20Dai.new({from: buyer});
-        this.SwapAlyInstance = await SwapAly.new({from: contractOwner});
+        this.CryptogamaSwapInstance = await CryptogamaSwap.new({from: contractOwner});
     });
 
     it("Check swap contract get owner function", async function() {
-        expect(await this.SwapAlyInstance.owner()).to.equal(contractOwner);
+        expect(await this.CryptogamaSwapInstance.owner()).to.equal(contractOwner);
     });
 
     it("Check swap contract transferOwnership function", async function() {
-        await this.SwapAlyInstance.transferOwnership(seller, {from: contractOwner});
-        expect(await this.SwapAlyInstance.owner()).to.equal(seller);
+        await this.CryptogamaSwapInstance.transferOwnership(seller, {from: contractOwner});
+        expect(await this.CryptogamaSwapInstance.owner()).to.equal(seller);
     });
 
     it("Check swapToken function regarding token balances", async function() {
@@ -309,12 +309,12 @@ contract("SwapAly", function(accounts){
         let buyerAlyBalanceBeforeTransfer = await this.TokenERC20AlyInstance.balanceOf(buyer);
         console.log("Buyer's balance before transfer: ALY:",parseInt(buyerAlyBalanceBeforeTransfer), " DAI:",parseInt(buyerDaiBalanceBeforeTransfer));
 
-        let contractDaiBalanceBeforeTransfer = await this.TokenERC20DaiInstance.balanceOf(this.SwapAlyInstance.address);
-        let contractAlyBalanceBeforeTransfer = await this.TokenERC20AlyInstance.balanceOf(this.SwapAlyInstance.address);
+        let contractDaiBalanceBeforeTransfer = await this.TokenERC20DaiInstance.balanceOf(this.CryptogamaSwapInstance.address);
+        let contractAlyBalanceBeforeTransfer = await this.TokenERC20AlyInstance.balanceOf(this.CryptogamaSwapInstance.address);
         console.log("Contract's balance before transfer: ALY:",parseInt(contractAlyBalanceBeforeTransfer), " DAI:",parseInt(contractDaiBalanceBeforeTransfer));
 
-        await this.TokenERC20AlyInstance.transfer(this.SwapAlyInstance.address, sellAmount, {from: seller});
-        await this.TokenERC20DaiInstance.transfer(this.SwapAlyInstance.address, buyAmount, {from: buyer});
+        await this.TokenERC20AlyInstance.transfer(this.CryptogamaSwapInstance.address, sellAmount, {from: seller});
+        await this.TokenERC20DaiInstance.transfer(this.CryptogamaSwapInstance.address, buyAmount, {from: buyer});
 
         console.log("After transfer balances: ")
 
@@ -326,11 +326,11 @@ contract("SwapAly", function(accounts){
         let buyerAlyBalanceBeforeSwap = await this.TokenERC20AlyInstance.balanceOf(buyer);
         console.log("Buyer's balance before swap: ALY:",parseInt(buyerAlyBalanceBeforeSwap), " DAI:",parseInt(buyerDaiBalanceBeforeSwap));
 
-        let contractDaiBalanceBeforeSwap = await this.TokenERC20DaiInstance.balanceOf(this.SwapAlyInstance.address);
-        let contractAlyBalanceBeforeSwap = await this.TokenERC20AlyInstance.balanceOf(this.SwapAlyInstance.address);
+        let contractDaiBalanceBeforeSwap = await this.TokenERC20DaiInstance.balanceOf(this.CryptogamaSwapInstance.address);
+        let contractAlyBalanceBeforeSwap = await this.TokenERC20AlyInstance.balanceOf(this.CryptogamaSwapInstance.address);
         console.log("Contract's balance before swap: ALY:",parseInt(contractAlyBalanceBeforeSwap), " DAI:",parseInt(contractDaiBalanceBeforeSwap));
 
-        await this.SwapAlyInstance.swapToken(
+        await this.CryptogamaSwapInstance.swapToken(
             seller,
             this.TokenERC20AlyInstance.address,
             sellAmount,
@@ -349,8 +349,8 @@ contract("SwapAly", function(accounts){
         let buyerAlyBalanceAfter = await this.TokenERC20AlyInstance.balanceOf(buyer);
         console.log("Buyer's balance after swap: ALY:",parseInt(buyerAlyBalanceAfter), " DAI:",parseInt(buyerDaiBalanceAfter));
 
-        let contractDaiBalanceAfter = await this.TokenERC20DaiInstance.balanceOf(this.SwapAlyInstance.address);
-        let contractAlyBalanceAfter = await this.TokenERC20AlyInstance.balanceOf(this.SwapAlyInstance.address);
+        let contractDaiBalanceAfter = await this.TokenERC20DaiInstance.balanceOf(this.CryptogamaSwapInstance.address);
+        let contractAlyBalanceAfter = await this.TokenERC20AlyInstance.balanceOf(this.CryptogamaSwapInstance.address);
         console.log("Contract's balance after swap: ALY:",parseInt(contractAlyBalanceAfter), " DAI:",parseInt(contractDaiBalanceAfter));
 
         expect(sellerAlyBalanceAfter).to.be.bignumber.equal(sellerAlyBalanceBeforeTransfer.sub(sellAmount));
@@ -367,12 +367,12 @@ contract("SwapAly", function(accounts){
         let sellAmount = new BN('10000');
         let buyAmount = new BN('150000');
 
-        await this.TokenERC20AlyInstance.transfer(this.SwapAlyInstance.address, sellAmount, {from: seller});
-        await this.TokenERC20DaiInstance.transfer(this.SwapAlyInstance.address, buyAmount, {from: buyer});
+        await this.TokenERC20AlyInstance.transfer(this.CryptogamaSwapInstance.address, sellAmount, {from: seller});
+        await this.TokenERC20DaiInstance.transfer(this.CryptogamaSwapInstance.address, buyAmount, {from: buyer});
 
         console.log("Expect hacker call to be reverted");
 
-        await expectRevert(this.SwapAlyInstance.swapToken(
+        await expectRevert(this.CryptogamaSwapInstance.swapToken(
             seller,
             this.TokenERC20AlyInstance.address,
             sellAmount,
@@ -398,39 +398,39 @@ contract("SwapAly", function(accounts){
         console.log("Owner: ", parseInt(ownerDAIBalanceBefore), "DAI");
 
         //Check contract balance in ETH, ALY and DAI
-        let SwapETHBalanceBefore = await web3.eth.getBalance(this.SwapAlyInstance.address);
+        let SwapETHBalanceBefore = await web3.eth.getBalance(this.CryptogamaSwapInstance.address);
         console.log("Contract:", SwapETHBalanceBefore/1000000000000000000, "ETH");
-        let contractALYBalanceBefore = await this.TokenERC20AlyInstance.balanceOf(this.SwapAlyInstance.address);
+        let contractALYBalanceBefore = await this.TokenERC20AlyInstance.balanceOf(this.CryptogamaSwapInstance.address);
         console.log("Contract:", parseInt(contractALYBalanceBefore), "ALY");
-        let contractDAIBalanceBefore = await this.TokenERC20DaiInstance.balanceOf(this.SwapAlyInstance.address);
+        let contractDAIBalanceBefore = await this.TokenERC20DaiInstance.balanceOf(this.CryptogamaSwapInstance.address);
         console.log("Contract:", parseInt(contractDAIBalanceBefore), "DAI");
 
         //Send ETH, ALY and DAI to the contract
-        await web3.eth.sendTransaction({from:seller, to:this.SwapAlyInstance.address, value:"10000000000000000000"});
+        await web3.eth.sendTransaction({from:seller, to:this.CryptogamaSwapInstance.address, value:"10000000000000000000"});
         console.log("Send 10 ETH to contract");
-        await this.TokenERC20AlyInstance.transfer(this.SwapAlyInstance.address, ALYAmount, {from: seller});
+        await this.TokenERC20AlyInstance.transfer(this.CryptogamaSwapInstance.address, ALYAmount, {from: seller});
         console.log("Send 2000 ALY to contract");
-        await this.TokenERC20DaiInstance.transfer(this.SwapAlyInstance.address, DAIAmount, {from: buyer});
+        await this.TokenERC20DaiInstance.transfer(this.CryptogamaSwapInstance.address, DAIAmount, {from: buyer});
         console.log("Send 20000 DAI to contract");
 
         //Check contract balance in ETH, ALY and DAI
-        let SwapETHBalanceAfterTransaction = await web3.eth.getBalance(this.SwapAlyInstance.address);
+        let SwapETHBalanceAfterTransaction = await web3.eth.getBalance(this.CryptogamaSwapInstance.address);
         console.log("Contract:", SwapETHBalanceAfterTransaction/1000000000000000000, "ETH");
-        let contractALYBalanceAfterTransaction = await this.TokenERC20AlyInstance.balanceOf(this.SwapAlyInstance.address);
+        let contractALYBalanceAfterTransaction = await this.TokenERC20AlyInstance.balanceOf(this.CryptogamaSwapInstance.address);
         console.log("Contract:", parseInt(contractALYBalanceAfterTransaction), "ALY");
-        let contractDAIBalanceAfterTransaction = await this.TokenERC20DaiInstance.balanceOf(this.SwapAlyInstance.address);
+        let contractDAIBalanceAfterTransaction = await this.TokenERC20DaiInstance.balanceOf(this.CryptogamaSwapInstance.address);
         console.log("Contract:", parseInt(contractDAIBalanceAfterTransaction), "DAI");
 
         //Withdraw function
-        await this.SwapAlyInstance.withdrawAll(this.TokenERC20AlyInstance.address, this.TokenERC20DaiInstance.address, {from:contractOwner});
+        await this.CryptogamaSwapInstance.withdrawAll(this.TokenERC20AlyInstance.address, this.TokenERC20DaiInstance.address, {from:contractOwner});
         console.log("Contract withdraw function()");
 
         //Check contract balance in ETH, ALY and DAI
-        let SwapETHBalanceAfterWithdraw = await web3.eth.getBalance(this.SwapAlyInstance.address);
+        let SwapETHBalanceAfterWithdraw = await web3.eth.getBalance(this.CryptogamaSwapInstance.address);
         console.log("Contract", SwapETHBalanceAfterWithdraw/1000000000000000000, "ETH");
-        let contractALYBalanceAfterWithdraw = await this.TokenERC20AlyInstance.balanceOf(this.SwapAlyInstance.address);
+        let contractALYBalanceAfterWithdraw = await this.TokenERC20AlyInstance.balanceOf(this.CryptogamaSwapInstance.address);
         console.log("Contract: ", parseInt(contractALYBalanceAfterWithdraw), "ALY");
-        let contractDAIBalanceAfterWithdraw = await this.TokenERC20DaiInstance.balanceOf(this.SwapAlyInstance.address);
+        let contractDAIBalanceAfterWithdraw = await this.TokenERC20DaiInstance.balanceOf(this.CryptogamaSwapInstance.address);
         console.log("Contract: ", parseInt(contractDAIBalanceAfterWithdraw), "DAI");
 
         //Check owner balance in ETH, ALY and DAI
