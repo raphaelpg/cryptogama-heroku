@@ -1,8 +1,8 @@
 [
   {
     "serverAddress": "0xCD3F68265720450519c4A62289a4eC2141FcA26D",
-    "swapContractAddress": "0x4E35023FEE94d072Cb6361Dbaf5775ceFd9B9AcA",
-    "alyContractAddress": "0xC110BB6321E86243e93FE19E5468C8F32722AF28",
-    "daiContractAddress": "0x52e70dec8BA60Ba0f395BD6c025D8000611490ec"
+    "swapContractAddress": "0xD1a451CC44cEB2Bd9696C2d462692E469cb1A63B",
+    "alyContractAddress": "0x5c54BACCbec0cCE69d182e18aCA154a3D74B0C3d",
+    "daiContractAddress": "0xA6829a86892ceeA94F18547765A2544047A6dd54"
   }
 ]

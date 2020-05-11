@@ -12,18 +12,22 @@ contract TokenERC20Dai is ERC20, Ownable {
     string public symbol;
     uint256 public decimals;
     uint256 public _totalSupply;
-    address private _owner;
+    address payable private _owner;
     uint256 private lastExecutionTime;
 
-    constructor() public {
+    event ContractEmptied(address indexed to, uint256 ETHAmount);
+
+    constructor() payable public {
         name = "ERC20 Token Dai";
         symbol = "DAI";
         decimals = 2;
         _owner = msg.sender;
         lastExecutionTime = 0;
         
-        _mint(msg.sender, 1000000);
+        _mint(msg.sender, 100000000);
     }
+
+    receive() external payable {}
 
     function getTokens(uint256 amount) public {
         require(amount <= 10000000, "Required amount must be less than 100000");
@@ -32,5 +36,16 @@ contract TokenERC20Dai is ERC20, Ownable {
 
         lastExecutionTime = now;
         _mint(msg.sender, amount);
+    }
+
+    /// @notice withdraw ETH stuck in the contract 
+    /// @dev transfer contract's ETH to current owner, emit an event called ContractEmptied
+    /// An event SwapContractEmptied containing the owner address and the ETH amount sent is emitted
+    function withdrawETH() external onlyOwner {
+        address payable self = address(this);
+        uint256 ETHbalance = self.balance;
+
+        _owner.transfer(ETHbalance);
+        emit ContractEmptied(_owner, ETHbalance);
     }
 }

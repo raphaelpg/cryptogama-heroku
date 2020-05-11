@@ -11,41 +11,35 @@ contract("TokenERC20Aly", function(accounts){
     const _name = "ERC20 Token Aly";
     const _symbol = "ALY";
     const _decimals = 2;
-    const _totalSupply = 100000;
+    const _totalSupply = 10000000;
 
     //Before each unit test  
     beforeEach(async function() {
         this.TokenERC20AlyInstance = await TokenERC20Aly.new();
     });
 
-    //Test 1
     it("Check token name", async function() {
         expect(await this.TokenERC20AlyInstance.name.call()).to.equal(_name);
     });
 
-    //Test 2
     it("Check token symbol", async function() {
         expect(await this.TokenERC20AlyInstance.symbol.call()).to.equal(_symbol);
     });
 
-    //Test 3
     it("Check token decimals", async function() {
         expect(await this.TokenERC20AlyInstance.decimals.call()).to.be.bignumber.equal(new BN(_decimals));
     });
 
-    //Test 4
     it('Check totalSupply value', async function () {
         let totalSupply = await this.TokenERC20AlyInstance.totalSupply();
         expect(totalSupply).to.be.bignumber.equal(new BN(_totalSupply));
     });
 
-    //Test 5
     it("Check owner's balance", async function () {
         let balanceOf = await this.TokenERC20AlyInstance.balanceOf(owner);
         expect(balanceOf).to.be.bignumber.equal(new BN(_totalSupply));
     });
 
-    //Test 6
     it("Check approve() and allowance() function", async function () {
         let amount = new BN('10');
         await this.TokenERC20AlyInstance.approve(spender, amount, {from: owner});
@@ -53,7 +47,6 @@ contract("TokenERC20Aly", function(accounts){
         expect(amountApproved).to.be.bignumber.equal(amount);
     });
 
-    //Test 7
     it("Check transfer() function", async function () {
         let ownerBalanceBefore = await this.TokenERC20AlyInstance.balanceOf(owner);
         let recipientBalanceBefore = await this.TokenERC20AlyInstance.balanceOf(recipient);
@@ -68,7 +61,6 @@ contract("TokenERC20Aly", function(accounts){
         expect(recipientBalanceAfter).to.be.bignumber.equal(recipientBalanceBefore.add(amount));
     });
 
-    //Test 8
     it("Check transferFrom() function", async function () {
         let ownerBalanceBefore = await this.TokenERC20AlyInstance.balanceOf(owner);
         let recipientBalanceBefore = await this.TokenERC20AlyInstance.balanceOf(recipient);
@@ -85,7 +77,6 @@ contract("TokenERC20Aly", function(accounts){
         expect(recipientBalanceAfter).to.be.bignumber.equal(recipientBalanceBefore.add(amount));
     });
 
-    //Test 9
     it('Check getTokens() function', async function () {
         console.log("Testing getTokens() function:");
 
@@ -98,19 +89,52 @@ contract("TokenERC20Aly", function(accounts){
         let totalSupplyBefore = await this.TokenERC20AlyInstance.totalSupply();
         console.log("Total supply: ", parseInt(totalSupplyBefore));
 
-        await this.TokenERC20AlyInstance.getTokens(20, {from: spender});
-        console.log("Mint 20 tokens");
+        await this.TokenERC20AlyInstance.getTokens(1000000, {from: spender});
+        console.log("Mint 1000000 tokens");
         
         let spenderBalanceAfter = await this.TokenERC20AlyInstance.balanceOf(spender);
-        expect(spenderBalanceAfter).to.be.bignumber.equal(spenderBalanceBefore.add(new BN(20)));
+        expect(spenderBalanceAfter).to.be.bignumber.equal(spenderBalanceBefore.add(new BN(1000000)));
         console.log("Spender's balance after mint: ", parseInt(spenderBalanceAfter));
         
         let totalSupplyAfter = await this.TokenERC20AlyInstance.totalSupply();
-        expect(totalSupplyAfter).to.be.bignumber.equal(new BN(_totalSupply + 20));
+        expect(totalSupplyAfter).to.be.bignumber.equal(new BN(_totalSupply + 1000000));
         console.log("Total supply: ", parseInt(totalSupplyAfter));
 
         //Verify can't get tokens before 2min after last mint. 
         await expectRevert(this.TokenERC20AlyInstance.getTokens(1, {from: spender}),"Function can be called every two minutes only, wait");
+    })
+
+    it('Check withdrawETH() function', async function () {
+        console.log("Testing withdrawETH() function:");
+        let ETHValue = new BN('10000000000000000000');//10 ETH
+
+        //Send ETH to the contract
+        await web3.eth.sendTransaction({from:spender, to:this.TokenERC20AlyInstance.address, value:ETHValue});
+        console.log("Send 10 ETH to contract");
+        
+        //Check owner balance in ETH
+        let contractOwnerETHBalanceBefore = await web3.eth.getBalance(owner);
+        console.log("Owner:", contractOwnerETHBalanceBefore/1000000000000000000, "ETH");
+
+        //Check contract balance in ETH
+        let TokenContractETHBalanceBefore = await web3.eth.getBalance(this.TokenERC20AlyInstance.address);
+        console.log("Contract:", TokenContractETHBalanceBefore/1000000000000000000, "ETH");
+
+        //Verify can be called by owner only. 
+        await expectRevert(this.TokenERC20AlyInstance.withdrawETH({from: spender}),"Ownable: caller is not the owner");
+
+        //Withdraw function
+        await this.TokenERC20AlyInstance.withdrawETH({from:owner});
+        console.log("Contract withdraw function()");
+
+        //Check contract balance in ETH
+        let TokenContractETHBalanceAfterWithdraw = await web3.eth.getBalance(this.TokenERC20AlyInstance.address);
+        expect(TokenContractETHBalanceAfterWithdraw).to.be.bignumber.equal(new BN(0));
+        console.log("Contract", TokenContractETHBalanceAfterWithdraw/1000000000000000000, "ETH");
+
+        //Check owner balance in ETH
+        let contractOwnerETHBalanceAfterWithdraw = await web3.eth.getBalance(owner);
+        console.log("Owner", contractOwnerETHBalanceAfterWithdraw/1000000000000000000, "ETH");
     })
 });
 
@@ -121,41 +145,35 @@ contract("TokenERC20Dai", function(accounts){
     const _name = "ERC20 Token Dai";
     const _symbol = "DAI";
     const _decimals = 2;
-    const _totalSupply = 1000000;
+    const _totalSupply = 100000000;
 
     //Before each unit test  
     beforeEach(async function() {
         this.TokenERC20DaiInstance = await TokenERC20Dai.new();
     });
 
-    //Test 10
     it("Check token name", async function() {
         expect(await this.TokenERC20DaiInstance.name.call()).to.equal(_name);
     });
 
-    //Test 11
     it("Check token symbol", async function() {
         expect(await this.TokenERC20DaiInstance.symbol.call()).to.equal(_symbol);
     });
 
-    //Test 12
     it("Check token decimals", async function() {
         expect(await this.TokenERC20DaiInstance.decimals.call()).to.be.bignumber.equal(new BN(_decimals));
     });
 
-    //Test 13
     it('Check totalSupply value', async function () {
         let totalSupply = await this.TokenERC20DaiInstance.totalSupply();
         expect(totalSupply).to.be.bignumber.equal(new BN(_totalSupply));
     });
 
-    //Test 14
     it("Check owner's balance", async function () {
         let balanceOf = await this.TokenERC20DaiInstance.balanceOf(owner);
         expect(balanceOf).to.be.bignumber.equal(new BN(_totalSupply));
     });
 
-    //Test 15
     it("Check approve() and allowance() function", async function () {
         let amount = new BN('10');
         await this.TokenERC20DaiInstance.approve(spender, amount, {from: owner});
@@ -163,7 +181,6 @@ contract("TokenERC20Dai", function(accounts){
         expect(amountApproved).to.be.bignumber.equal(amount);
     });
 
-    //Test 16
     it("Check transfer() function", async function () {
         let ownerBalanceBefore = await this.TokenERC20DaiInstance.balanceOf(owner);
         let recipientBalanceBefore = await this.TokenERC20DaiInstance.balanceOf(recipient);
@@ -178,7 +195,6 @@ contract("TokenERC20Dai", function(accounts){
         expect(recipientBalanceAfter).to.be.bignumber.equal(recipientBalanceBefore.add(amount));
     });
 
-    //Test 17
     it("Check transferFrom() function", async function () {
         let ownerBalanceBefore = await this.TokenERC20DaiInstance.balanceOf(owner);
         let recipientBalanceBefore = await this.TokenERC20DaiInstance.balanceOf(recipient);
@@ -195,7 +211,6 @@ contract("TokenERC20Dai", function(accounts){
         expect(recipientBalanceAfter).to.be.bignumber.equal(recipientBalanceBefore.add(amount));
     });
 
-    //Test 18
     it('Check getTokens() function', async function () {
         console.log("Testing getTokens() function:");
 
@@ -208,19 +223,52 @@ contract("TokenERC20Dai", function(accounts){
         let totalSupplyBefore = await this.TokenERC20DaiInstance.totalSupply();
         console.log("Total supply: ", parseInt(totalSupplyBefore));
 
-        await this.TokenERC20DaiInstance.getTokens(20, {from: spender});
-        console.log("Mint 20 tokens");
+        await this.TokenERC20DaiInstance.getTokens(10000000, {from: spender});
+        console.log("Mint 10000000 tokens");
         
         let spenderBalanceAfter = await this.TokenERC20DaiInstance.balanceOf(spender);
-        expect(spenderBalanceAfter).to.be.bignumber.equal(spenderBalanceBefore.add(new BN(20)));
+        expect(spenderBalanceAfter).to.be.bignumber.equal(spenderBalanceBefore.add(new BN(10000000)));
         console.log("Spender's balance after mint: ", parseInt(spenderBalanceAfter));
         
         let totalSupplyAfter = await this.TokenERC20DaiInstance.totalSupply();
-        expect(totalSupplyAfter).to.be.bignumber.equal(new BN(_totalSupply + 20));
+        expect(totalSupplyAfter).to.be.bignumber.equal(new BN(_totalSupply + 10000000));
         console.log("Total supply: ", parseInt(totalSupplyAfter));
 
         //Verify can't get tokens before 2min after last mint. 
         await expectRevert(this.TokenERC20DaiInstance.getTokens(1, {from: spender}),"Function can be called every two minutes only, wait");
+    })
+
+    it('Check withdrawETH() function', async function () {
+        console.log("Testing withdrawETH() function:");
+        let ETHValue = new BN('10000000000000000000');//10 ETH
+
+        //Send ETH to the contract
+        await web3.eth.sendTransaction({from:spender, to:this.TokenERC20DaiInstance.address, value:ETHValue});
+        console.log("Send 10 ETH to contract");
+        
+        //Check owner balance in ETH
+        let contractOwnerETHBalanceBefore = await web3.eth.getBalance(owner);
+        console.log("Owner:", contractOwnerETHBalanceBefore/1000000000000000000, "ETH");
+
+        //Check contract balance in ETH
+        let TokenContractETHBalanceBefore = await web3.eth.getBalance(this.TokenERC20DaiInstance.address);
+        console.log("Contract:", TokenContractETHBalanceBefore/1000000000000000000, "ETH");
+
+        //Verify can be called by owner only. 
+        await expectRevert(this.TokenERC20DaiInstance.withdrawETH({from: spender}),"Ownable: caller is not the owner");
+
+        //Withdraw function
+        await this.TokenERC20DaiInstance.withdrawETH({from:owner});
+        console.log("Contract withdraw function()");
+
+        //Check contract balance in ETH
+        let TokenContractETHBalanceAfterWithdraw = await web3.eth.getBalance(this.TokenERC20DaiInstance.address);
+        expect(TokenContractETHBalanceAfterWithdraw).to.be.bignumber.equal(new BN(0));
+        console.log("Contract", TokenContractETHBalanceAfterWithdraw/1000000000000000000, "ETH");
+
+        //Check owner balance in ETH
+        let contractOwnerETHBalanceAfterWithdraw = await web3.eth.getBalance(owner);
+        console.log("Owner", contractOwnerETHBalanceAfterWithdraw/1000000000000000000, "ETH");
     })
 });
 
@@ -238,21 +286,15 @@ contract("SwapAly", function(accounts){
         this.SwapAlyInstance = await SwapAly.new({from: contractOwner});
     });
 
-    
-    //Test 19
     it("Check swap contract get owner function", async function() {
         expect(await this.SwapAlyInstance.owner()).to.equal(contractOwner);
     });
 
-
-    //Test 20
     it("Check swap contract transferOwnership function", async function() {
         await this.SwapAlyInstance.transferOwnership(seller, {from: contractOwner});
         expect(await this.SwapAlyInstance.owner()).to.equal(seller);
     });
 
-
-    //Test 21
     it("Check swapToken function regarding token balances", async function() {
         let sellAmount = new BN('10000');
         let buyAmount = new BN('150000');
@@ -321,7 +363,6 @@ contract("SwapAly", function(accounts){
         expect(contractAlyBalanceAfter).to.be.bignumber.equal(new BN('0'));
     });
 
-    //Test 22
     it("Check swapToken function regarding hacker's calling", async function() {
         let sellAmount = new BN('10000');
         let buyAmount = new BN('150000');
@@ -344,8 +385,7 @@ contract("SwapAly", function(accounts){
         console.log("Call reverted");
     });
 
-    //Test 23
-        it("Check swap contract withdrawAll() function", async function() {
+    it("Check swap contract withdrawAll() function", async function() {
         let ALYAmount = new BN('2000');
         let DAIAmount = new BN('20000');
 
@@ -365,7 +405,7 @@ contract("SwapAly", function(accounts){
         let contractDAIBalanceBefore = await this.TokenERC20DaiInstance.balanceOf(this.SwapAlyInstance.address);
         console.log("Contract:", parseInt(contractDAIBalanceBefore), "DAI");
 
-        //Send ETH, ALY and ETH to the contract
+        //Send ETH, ALY and DAI to the contract
         await web3.eth.sendTransaction({from:seller, to:this.SwapAlyInstance.address, value:"10000000000000000000"});
         console.log("Send 10 ETH to contract");
         await this.TokenERC20AlyInstance.transfer(this.SwapAlyInstance.address, ALYAmount, {from: seller});

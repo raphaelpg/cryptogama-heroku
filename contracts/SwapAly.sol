@@ -25,7 +25,7 @@ contract SwapAly is Ownable {
     /// @dev swap tokens, owner of swap contract need the approval of both token owners, emit an event called TokenExchanged
     /// @param sellerAddress the address of the seller, sellerTokenAddress the address of the seller ERC-20, amountSeller the amount the seller wants to exchange, buyerAddress the buyer address, buyerTokenAddress the adress of the buyer ERC-20, amountBuyer the amount to be exchanged
     /// @return an event TokenExchanged containing the seller address, the buyer address, the amount sold and the amount bought in this order
-    function swapToken(address sellerAddress, address sellerTokenAddress, uint256 amountSeller,  address buyerAddress, address buyerTokenAddress, uint256 amountBuyer) external onlyOwner returns(bool){
+    function swapToken(address sellerAddress, address payable sellerTokenAddress, uint256 amountSeller,  address buyerAddress, address payable buyerTokenAddress, uint256 amountBuyer) external onlyOwner returns(bool){
         TokenERC20Aly TokenSell = TokenERC20Aly(sellerTokenAddress);
         TokenERC20Dai TokenBuy = TokenERC20Dai(buyerTokenAddress);
 
@@ -39,7 +39,7 @@ contract SwapAly is Ownable {
     /// @dev withdraw funds from contract and transfer them to current owner, including ETH, emit an event called SwapContractEmptied
     /// @param ALYTokenAddress the address of ALY token, DAITokenAddress the address of DAI token
     /// An event SwapContractEmptied containing the owner address, the ETH amount sent, ALY amount sent and DAI amount sent is emitted
-    function withdrawAll(address ALYTokenAddress, address DAITokenAddress) external onlyOwner {
+    function withdrawAll(address payable ALYTokenAddress, address payable DAITokenAddress) external onlyOwner {
         TokenERC20Aly TokenALY = TokenERC20Aly(ALYTokenAddress);
         TokenERC20Dai TokenDAI = TokenERC20Dai(DAITokenAddress);
 
