@@ -33,7 +33,6 @@
     "express": "^4.16.4",
     "fs": "0.0.1-security",
     "ganache-cli": "6.7.0",
-    "pm2": "^4.4.0",
     "truffle": "^5.1.21",
     "truffle-hdwallet-provider": "^1.0.17",
     "web3": "^1.2.7"
