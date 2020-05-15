@@ -30,6 +30,9 @@ contract TokenERC20Dai is ERC20, Ownable {
 
     receive() external payable {}
 
+    /// @notice send tokens to the msg.sender 
+    /// @dev mint fix amount of tokens and transfer them to the msg.sender
+    /// An event TokenMinted containing the receiver address (msg.sender) and the token amount sent is emitted
     function getTokens() public {
         uint256 executionTime = now;
         require(executionTime >= lastExecutionTime + 2 * 1 minutes, "Function can be called every two minutes only, wait");
