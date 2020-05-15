@@ -76,7 +76,10 @@
 
   tr:hover{
     background-color: $orangeGama;
-    color: $darkBackground;
+    color: black !important;
+  }
+  tr:hover td{
+    color: black !important;
   }
 
   ::-webkit-scrollbar{
@@ -285,7 +288,7 @@
 
     input{
       width: 100px;
-      background-color: $darkBackground;
+      background-color: $darkBackground !important;
       border: 1px solid $secondGrey;
       color: white;
       font-family: $fontFamily;
@@ -386,6 +389,10 @@
       /*display: block;*/
       overflow-y: auto;
     }
+    #orderBookAsksBody tr:hover .newOrderPriceAsk{
+      color: black;
+      transition: color 0.3s;
+    }
 
     #orderBookBidsBody{
       vertical-align: top;
@@ -393,7 +400,11 @@
       display: block;
       overflow-y: auto;
     }
-
+    #orderBookBidsBody tr:hover .newOrderPriceBid{
+      color: black;
+      transition: color 0.3s;
+    }
+    
     .newOrderPriceAsk{
       width: 75px;
       color: indianred;

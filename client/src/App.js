@@ -44,6 +44,7 @@ class App extends Component {
     super(props);
     this.state = { 
       web3: null,
+      network: '',
       accounts: null,
       swapContract: null,
       SwapContractOwner: null,
@@ -85,6 +86,13 @@ class App extends Component {
   componentDidMount = async () => {
     try {
       const web3 = await getWeb3();
+      
+      await web3.eth.net.getNetworkType((err, network)=> {
+        if (network !== "ropsten"){
+          alert(`Switch your wallet network to Ropsten testnet`);
+        }
+      })
+
       const accounts = await web3.eth.getAccounts();
 
       const instanceTokenAly = new web3.eth.Contract(
@@ -102,19 +110,17 @@ class App extends Component {
         this.state.swapContractAddress,
       );
 
+
       //SET PARAMETERS TO THE STATE
       this.setState({ 
-        web3, 
+        web3,
         accounts, 
         tokenAlyContract: instanceTokenAly,
         tokenDaiContract: instanceTokenDai,
         swapContract: instanceSwapAly,
       })
     } catch (error) {
-      alert(
-        `No wallet detected.\nAdd a crypto wallet such as Metamask to your browser.`,
-      );
-      console.error(error);
+      alert(`No wallet detected.\nAdd a crypto wallet such as Metamask to your browser.`);
     } finally {
       this.displayOrderBook();
       this.displayTradeHistory();
@@ -189,6 +195,7 @@ class App extends Component {
             <Graph tradeGraph = { this.state.tradeGraph } />
             <div className="buySellToken">
               <BuyForm 
+                web3 = { this.state.web3 }
                 serverStatus = { this.state.serverStatus }
                 bestSellerPrice = { this.state.bestSellerPrice }
                 accounts = { this.state.accounts }
@@ -198,7 +205,7 @@ class App extends Component {
               />
               <SellForm 
                 serverStatus = { this.state.serverStatus }
-                bestSellerPrice = { this.state.bestSellerPrice }
+                bestBuyerPrice = { this.state.bestBuyerPrice }
                 accounts = { this.state.accounts }
                 swapContractAddress = { this.state.swapContractAddress }
                 tokenAlyContract = { this.state.tokenAlyContract }

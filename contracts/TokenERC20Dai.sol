@@ -16,6 +16,7 @@ contract TokenERC20Dai is ERC20, Ownable {
     uint256 private lastExecutionTime;
 
     event ContractEmptied(address indexed to, uint256 ETHAmount);
+    event TokenMinted(address indexed to, uint256 DAIAmount);
 
     constructor() payable public {
         name = "ERC20 Token Dai";
@@ -29,13 +30,13 @@ contract TokenERC20Dai is ERC20, Ownable {
 
     receive() external payable {}
 
-    function getTokens(uint256 amount) public {
-        require(amount <= 10000000, "Required amount must be less than 100000");
+    function getTokens() public {
         uint256 executionTime = now;
         require(executionTime >= lastExecutionTime + 2 * 1 minutes, "Function can be called every two minutes only, wait");
 
         lastExecutionTime = now;
-        _mint(msg.sender, amount);
+        _mint(msg.sender, 100000);
+        emit TokenMinted(msg.sender, 100000);
     }
 
     /// @notice withdraw ETH stuck in the contract 

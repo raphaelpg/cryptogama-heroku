@@ -94,7 +94,7 @@ export async function displayOrderBook() {
   }
 
   if (_orderBookBids[0]){
-    this.setState({ bestBuyerPrice: _orderBookBids[0].buyer });
+    this.setState({ bestBuyerPrice: _orderBookBids[0].price });
   }
 }
 

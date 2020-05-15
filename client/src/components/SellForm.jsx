@@ -86,10 +86,11 @@ class SellForm extends Component {
 	            <div>
 	              <input 
 	                className="inputFields"
-	                type="text"
+	                type="number"
 	                id="priceSell"
-	                maxLength="7"
-	                placeholder={ this.props.bestSellerPrice.toFixed(2) }
+	                step="0.01"
+	                min={ this.props.bestBuyerPrice.toFixed(2) }
+	                placeholder={ this.props.bestBuyerPrice.toFixed(2) }
 	                onChange={ this.handleSellPrice }
 	                ref={ (input) => { this.priceSell = input } }
 	                autoComplete="off"

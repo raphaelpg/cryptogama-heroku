@@ -44,6 +44,7 @@ const swapContractInstance = new web3.eth.Contract(
 
 // //1.IMPORT LIBRARIES
 const express = require('express');
+const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -53,6 +54,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({origin: '*'}));
 
 app.use(express.static('./client/build'));
+
 
 //2.SEND DATA TO CLIENT
 

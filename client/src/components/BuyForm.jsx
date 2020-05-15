@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { checkOrders, fixRounding } from '../utils/serverInteractionsFunctions'; 
 
+
 class BuyForm extends Component {
 	constructor(props){
 		super(props);
@@ -53,7 +54,7 @@ class BuyForm extends Component {
 			  let volumeToApprove = total;
 
 			  //EXECUTE APPROVAL TO THE TOKEN CONTRACT
-			  await tokenDaiContract.methods.transfer(swapContractAddress, volumeToApprove*100).send({from: accounts[0]})
+			  await tokenDaiContract.methods.transfer(swapContractAddress, volumeToApprove*100).send({from: accounts[0]});
 
 			  //SEND ORDER TO SERVER
 			  await fetch('/api/insert', {
@@ -87,9 +88,11 @@ class BuyForm extends Component {
 	            <div>
 	              <input 
 	                className="inputFields"
-	                type="text"
+	                type="number"
 	                id="priceBuy"
-	                maxLength="7"
+	                min="1"
+	                step="0.01"
+	                max={ this.props.bestSellerPrice.toFixed(2) }
 	                placeholder={ this.props.bestSellerPrice.toFixed(2) }
 	                onChange={ this.handleBuyPrice }
 	                ref={ (input) => { this.priceBuy = input } }

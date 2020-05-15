@@ -80,28 +80,25 @@ contract("TokenERC20Aly", function(accounts){
     it('Check getTokens() function', async function () {
         console.log("Testing getTokens() function:");
 
-        //Verify can't get more than 10 000 ALY per call. 
-        await expectRevert(this.TokenERC20AlyInstance.getTokens(1000001, {from: spender}),"Required amount must be less than 10000");
-        
         let spenderBalanceBefore = await this.TokenERC20AlyInstance.balanceOf(spender);
         console.log("Spender's balance: ", parseInt(spenderBalanceBefore));
         
         let totalSupplyBefore = await this.TokenERC20AlyInstance.totalSupply();
         console.log("Total supply: ", parseInt(totalSupplyBefore));
 
-        await this.TokenERC20AlyInstance.getTokens(1000000, {from: spender});
-        console.log("Mint 1000000 tokens");
+        await this.TokenERC20AlyInstance.getTokens({from: spender});
+        console.log("Mint 10 tokens");
         
         let spenderBalanceAfter = await this.TokenERC20AlyInstance.balanceOf(spender);
-        expect(spenderBalanceAfter).to.be.bignumber.equal(spenderBalanceBefore.add(new BN(1000000)));
+        expect(spenderBalanceAfter).to.be.bignumber.equal(spenderBalanceBefore.add(new BN(1000)));
         console.log("Spender's balance after mint: ", parseInt(spenderBalanceAfter));
         
         let totalSupplyAfter = await this.TokenERC20AlyInstance.totalSupply();
-        expect(totalSupplyAfter).to.be.bignumber.equal(new BN(_totalSupply + 1000000));
+        expect(totalSupplyAfter).to.be.bignumber.equal(new BN(_totalSupply + 1000));
         console.log("Total supply: ", parseInt(totalSupplyAfter));
 
         //Verify can't get tokens before 2min after last mint. 
-        await expectRevert(this.TokenERC20AlyInstance.getTokens(1, {from: spender}),"Function can be called every two minutes only, wait");
+        await expectRevert(this.TokenERC20AlyInstance.getTokens({from: spender}),"Function can be called every two minutes only, wait");
     })
 
     it('Check withdrawETH() function', async function () {
@@ -214,28 +211,25 @@ contract("TokenERC20Dai", function(accounts){
     it('Check getTokens() function', async function () {
         console.log("Testing getTokens() function:");
 
-        //Verify can't get more than 100 000 DAI per call. 
-        await expectRevert(this.TokenERC20DaiInstance.getTokens(10000001, {from: spender}),"Required amount must be less than 100000");
-        
         let spenderBalanceBefore = await this.TokenERC20DaiInstance.balanceOf(spender);
         console.log("Spender's balance: ", parseInt(spenderBalanceBefore));
         
         let totalSupplyBefore = await this.TokenERC20DaiInstance.totalSupply();
         console.log("Total supply: ", parseInt(totalSupplyBefore));
 
-        await this.TokenERC20DaiInstance.getTokens(10000000, {from: spender});
-        console.log("Mint 10000000 tokens");
+        await this.TokenERC20DaiInstance.getTokens({from: spender});
+        console.log("Mint 1000 tokens");
         
         let spenderBalanceAfter = await this.TokenERC20DaiInstance.balanceOf(spender);
-        expect(spenderBalanceAfter).to.be.bignumber.equal(spenderBalanceBefore.add(new BN(10000000)));
+        expect(spenderBalanceAfter).to.be.bignumber.equal(spenderBalanceBefore.add(new BN(100000)));
         console.log("Spender's balance after mint: ", parseInt(spenderBalanceAfter));
         
         let totalSupplyAfter = await this.TokenERC20DaiInstance.totalSupply();
-        expect(totalSupplyAfter).to.be.bignumber.equal(new BN(_totalSupply + 10000000));
+        expect(totalSupplyAfter).to.be.bignumber.equal(new BN(_totalSupply + 100000));
         console.log("Total supply: ", parseInt(totalSupplyAfter));
 
         //Verify can't get tokens before 2min after last mint. 
-        await expectRevert(this.TokenERC20DaiInstance.getTokens(1, {from: spender}),"Function can be called every two minutes only, wait");
+        await expectRevert(this.TokenERC20DaiInstance.getTokens({from: spender}),"Function can be called every two minutes only, wait");
     })
 
     it('Check withdrawETH() function', async function () {
