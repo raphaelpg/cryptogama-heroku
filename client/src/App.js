@@ -160,9 +160,6 @@ class App extends Component {
   //3.RENDER
 
   render() {
-    // if (!this.state.web3) {
-    //   return <div>Loading Web3, accounts, and contract...</div>;
-    // }
 
     return (
       <div className="App">
