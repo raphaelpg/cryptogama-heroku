@@ -27,6 +27,7 @@ import Graph from './components/Graph';
 import Orderbook from './components/Orderbook';
 import BuyForm from './components/BuyForm';
 import SellForm from './components/SellForm';
+import Footer from './components/Footer';
 
 //IMPORT FUNCTIONS
 import { getServerData, displayOrderBook, displayTradeHistory, getTradeGraphData, updateTradeGraphData, getUserBalance } from './utils/serverInteractionsFunctions';
@@ -87,11 +88,11 @@ class App extends Component {
     try {
       const web3 = await getWeb3();
       
-      await web3.eth.net.getNetworkType((err, network)=> {
-        if (network !== "ropsten"){
-          alert(`Switch your wallet network to Ropsten testnet`);
-        }
-      })
+      // await web3.eth.net.getNetworkType((err, network)=> {
+      //   if (network !== "ropsten"){
+      //     alert(`Switch your wallet network to Ropsten testnet`);
+      //   }
+      // })
 
       const accounts = await web3.eth.getAccounts();
 
@@ -120,7 +121,7 @@ class App extends Component {
         swapContract: instanceSwapAly,
       })
     } catch (error) {
-      alert(`No wallet detected.\nAdd a crypto wallet such as Metamask to your browser.`);
+      alert(`No wallet detected or wrong network.\nAdd a crypto wallet such as Metamask to your browser and switch it to Ropsten network.`);
     } finally {
       this.displayOrderBook();
       this.displayTradeHistory();
@@ -214,6 +215,7 @@ class App extends Component {
             <Orderbook bestSellerPrice={ this.state.bestSellerPrice } />
           </div>
         </div>
+        <Footer />  
       </div>
     );
   }

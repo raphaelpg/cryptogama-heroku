@@ -13,8 +13,13 @@ Desktop Styles
 @media only screen and (min-width: 768px) {
 
 /*GLOBAL*/
-  .App {
-    text-align: center;
+  *{
+    margin:0;
+    padding:0;
+  }
+
+  body, html{
+    height:100%;
   }
 
   body {
@@ -28,6 +33,11 @@ Desktop Styles
     background-color: #262626;
     color: $fontColor;
     text-transform: uppercase;
+  }
+
+  .App {
+    text-align: center;
+    min-height:100%;
   }
 
   code {
@@ -114,20 +124,19 @@ Desktop Styles
   }
 
   .Title {
-    margin-left: 10px;
+    margin: 20px 0px 20px 20px;
     color: $orangeGama;
     font-size: 36px;
   }
 
   .description {
     font-size: medium;
-    margin: auto auto 30px 25px;
+    margin: auto auto 27px 10px;
   }
 
   .ServerStatus {
-    margin-right: 2%;
-    margin-top: 2%;
     color: $orangeGama;
+    margin: 30px 20px 20px 20px;
   }
 
   .ServerStatusTitle {
@@ -560,6 +569,31 @@ Desktop Styles
     margin: 10px 0 10px 0;
   }
 
+/*Footer*/
+  footer{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    /*padding-top:50px;*/
+    height:30px;
+    background-color: $darkBackground;
+    color: $orangeGama;
+    border-top: 1px solid $orangeGama;
+  }
+
+  .footerContainer{
+    display: flex;
+    justify-content: center;
+    margin: 5px;
+  }
+  .footerContainer a{
+    color: $orangeGama;
+    text-decoration: none;
+  }
+  .footerContainer a:visited{
+    color: $orangeGama;
+    text-decoration: none;
+  }
 
 }
 
@@ -580,7 +614,7 @@ Mobile Styles
     font-family: $fontFamily;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-size: 14px;
+    font-size: 13px;
     margin: 0;
     padding: 0;
     width: 100%;
@@ -677,7 +711,7 @@ Mobile Styles
     color: $orangeGama;
     font-size: 36px;
     text-align: left;
-    margin: 15px 0px 15px 25px;
+    margin: 15px 0px 15px 20px;
   }
 
   .description {
@@ -769,8 +803,7 @@ Mobile Styles
   .Main {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    height: 600px;
+    justify-content: flex-start;
   }
 
   /*MAIN LEFT*/
@@ -873,17 +906,26 @@ Mobile Styles
       font-family: $fontFamily;
     }
 
+    input[type=number] {
+        -moz-appearance:textfield;
+    }
+
     .inputFields{
-      -webkit-appearance:none!important;
-        border-right:0px;
-        outline:none;
-        width:60px;
+      border-right:0px;
+      outline:none;
+      width:55px;
+    }
+
+    .inputFields::-webkit-outer-spin-button,
+    .inputFields::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+        margin: 0;  
     }
 
     .inputFields2{
       -webkit-appearance:none!important;
         text-align:right;
-        width:45px;
+        width:25px;
         border-left:0px;
         margin:0 0 0 -7px;
         color: $fontColor;
@@ -1129,6 +1171,30 @@ Mobile Styles
 
   .faucetALYContract{
     margin: 10px 0 10px 0;
+  }
+
+  /*Footer*/
+  footer{
+    position: relative;
+    width: 100%;
+    padding-top: 5px;
+    height: 20px;
+    background-color: #1D1D1D;
+    color: darkorange;
+    border-top: 1px solid darkorange;
+  }
+
+  .footerContainer{
+    display: flex;
+    justify-content: center;
+  }
+  .footerContainer a{
+    color: $orangeGama;
+    text-decoration: none;
+  }
+  .footerContainer a:visited{
+    color: $orangeGama;
+    text-decoration: none;
   }
 
 }
