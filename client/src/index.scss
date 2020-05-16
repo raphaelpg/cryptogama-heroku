@@ -512,7 +512,7 @@ Desktop Styles
   .faucetTitle{
     text-align: left;
     font-size: 20px;
-    padding: 0 0 0 25px;
+    padding: 5px 0px 0 25px;;
     color: $orangeGama;
   }
 
@@ -520,16 +520,22 @@ Desktop Styles
     margin: auto 0;
   }
 
+  .faucetFormContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
   .faucetForm{
-    text-align: left;
     margin: 30px 0px 0px 40px;
     padding: 0 0 0 0;
     display: flex;
     justify-content: space-between;
+    width: 50%;
   }
 
   .faucetFormInput{
-    margin: 0 110px 0 0;
+    margin: auto;
   }
 
   input[type=number]::-webkit-outer-spin-button,
@@ -1085,7 +1091,7 @@ Mobile Styles
   }
 
   .faucet{
-    width: 500px;
+    width: 95%;
     height: 330px;
     background-color: $darkBackground;
     border: solid 1px $orangeGama;
@@ -1125,16 +1131,23 @@ Mobile Styles
     margin: auto 0;
   }
 
+  .faucetFormContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+  }
+
   .faucetForm{
-    text-align: left;
-    margin: 30px 0px 0px 40px;
+    margin: 30px 0px 0px 0px;
     padding: 0 0 0 0;
     display: flex;
     justify-content: space-between;
+    width: 50%;
   }
 
   .faucetFormInput{
-    margin: 0 110px 0 0;
+    margin: auto;
   }
 
   input[type=number]::-webkit-outer-spin-button,

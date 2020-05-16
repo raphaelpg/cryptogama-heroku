@@ -27,23 +27,24 @@ class Faucet extends Component {
       <div className="faucet">
           <button className="closeFaucetButton" onClick={this.props.closeFaucet}>x</button>
           <p className="faucetTitle">Faucet</p>
-          <form className="faucetForm" onSubmit={ async (event) => {
-            event.preventDefault()
-            this.receiveTokens("ALY")
-          } }>
-            <div className="faucetFormInput">
-              <button className="getTokenButton" type="submit"> Get ALY </button>
-            </div>
-          </form>
-          <form className="faucetForm" onSubmit={ async (event) => {
-            event.preventDefault()
-            this.receiveTokens("DAI")
-          } }>
-            <div className="faucetFormInput">
-              <button className="getTokenButton" type="submit"> Get DAI </button>
-            </div>
-          </form>
-
+          <div className="faucetFormContainer">
+            <form className="faucetForm" onSubmit={ async (event) => {
+              event.preventDefault()
+              this.receiveTokens("ALY")
+            } }>
+              <div className="faucetFormInput">
+                <button className="getTokenButton" type="submit"> Get ALY </button>
+              </div>
+            </form>
+            <form className="faucetForm" onSubmit={ async (event) => {
+              event.preventDefault()
+              this.receiveTokens("DAI")
+            } }>
+              <div className="faucetFormInput">
+                <button className="getTokenButton" type="submit"> Get DAI </button>
+              </div>
+            </form>
+          </div>
           <div className="faucetComments">
             <div className="faucetAdvice">The faucet has a 2min cooldown, so if you can't get tokens try a few moment later</div>
             <div className="faucetALYContract">ALY contract address:  {this.props.tokenAlyContractAddress}</div>
