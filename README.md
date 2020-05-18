@@ -11,28 +11,11 @@ Compatibility with other OS not tested yet.
 
 ## Interact with the app
 
-Once the app started, select the network 7545 in Metamask.
-
-Three Metamask accounts are used:  
-	Account #1: owner of the App  
-	Account #2: the owner of ALY ERC-20 tokens  
-	Account #3: the owner of DAI ERC-20 tokens  
+Make sure you have Metamask on your browser active on Ropsten network.  
 
 Important: after changing account in Metamask, refresh the browser for the change to be considered.  
 
-Select the account#2 in Metamask and place a Sell order, setting the price and the volume of ALY you want to sell and clicking on the Sell button.  
-![Cryptogama title](https://github.com/raphaelpg/Cryptogama/blob/master/images/Sell.PNG)  
-The order should appear in the order book.  
-![Cryptogama title](https://github.com/raphaelpg/Cryptogama/blob/master/images/Orderbook.PNG)  
-
-Select the account#3 in Metamask, refresh the browser, place a Buy order with the same price to exchange tokens with account#2.  
-![Cryptogama title](https://github.com/raphaelpg/Cryptogama/blob/master/images/Buy.PNG)  
-The exchange is automaticaly done when two orders have a matching price.  
-It can take some time to process, wait untill the Trade History and the Graph are updated.  
-![Cryptogama title](https://github.com/raphaelpg/Cryptogama/blob/master/images/Graph.PNG)  
-
-You can check each token's balance in the App and in Metamask.  
-![Cryptogama title](https://github.com/raphaelpg/Cryptogama/blob/master/images/Balnce.PNG)
+Get yourself some ALY and DAI tokens using the faucet, and try to buy or sell some tokens.  
 
 
 ## Deployment
