@@ -164,55 +164,57 @@ class App extends Component {
 
     return (
       <div className="App">
-        <Header serverStatus={ this.state.serverStatus } />  
-        <div className="navbar">
-          <TokenSelector />
-          <div className="balanceAndFaucet">
-            <UserBalance 
-              ALYBalance = { this.state.ALYBalance }
-              DAIBalance = { this.state.DAIBalance }
-            />
-            <button className="displayFaucetButton" onClick={(e) => this.setState({ displayFaucet:true })}>Open faucet</button>
-            <Faucet 
-              serverStatus = { this.state.serverStatus }
-              displayFaucet={ this.state.displayFaucet } 
-              closeFaucet={(e) => this.setState({ displayFaucet:false })}
-              accounts = { this.state.accounts }
-              tokenAlyContract = { this.state.tokenAlyContract }
-              tokenAlyContractAddress = { this.state.tokenAlyContractAddress }
-              tokenDaiContract = { this.state.tokenDaiContract }
-              tokenDaiContractAddress = { this.state.tokenDaiContractAddress }
-            />
-          </div>
-        </div>
-        <div className="Main">
-          <div className="MainLeft">
-            <TradeHistory />            
-          </div>
-          <div className="MainCenter">
-            <Graph tradeGraph = { this.state.tradeGraph } />
-            <div className="buySellToken">
-              <BuyForm 
-                web3 = { this.state.web3 }
+        <div className="site">
+          <Header serverStatus={ this.state.serverStatus } />  
+          <div className="navbar">
+            <TokenSelector />
+            <div className="balanceAndFaucet">
+              <UserBalance 
+                ALYBalance = { this.state.ALYBalance }
+                DAIBalance = { this.state.DAIBalance }
+              />
+              <button className="displayFaucetButton" onClick={(e) => this.setState({ displayFaucet:true })}>Open faucet</button>
+              <Faucet 
                 serverStatus = { this.state.serverStatus }
-                bestSellerPrice = { this.state.bestSellerPrice }
+                displayFaucet={ this.state.displayFaucet } 
+                closeFaucet={(e) => this.setState({ displayFaucet:false })}
                 accounts = { this.state.accounts }
-                swapContractAddress = { this.state.swapContractAddress }
+                tokenAlyContract = { this.state.tokenAlyContract }
+                tokenAlyContractAddress = { this.state.tokenAlyContractAddress }
                 tokenDaiContract = { this.state.tokenDaiContract }
                 tokenDaiContractAddress = { this.state.tokenDaiContractAddress }
               />
-              <SellForm 
-                serverStatus = { this.state.serverStatus }
-                bestBuyerPrice = { this.state.bestBuyerPrice }
-                accounts = { this.state.accounts }
-                swapContractAddress = { this.state.swapContractAddress }
-                tokenAlyContract = { this.state.tokenAlyContract }
-                tokenAlyContractAddress = { this.state.tokenAlyContractAddress }
-              />
             </div>
           </div>
-          <div className="MainRight">
-            <Orderbook bestSellerPrice={ this.state.bestSellerPrice } />
+          <div className="Main">
+            <div className="MainLeft">
+              <TradeHistory />            
+            </div>
+            <div className="MainCenter">
+              <Graph tradeGraph = { this.state.tradeGraph } />
+              <div className="buySellToken">
+                <BuyForm 
+                  web3 = { this.state.web3 }
+                  serverStatus = { this.state.serverStatus }
+                  bestSellerPrice = { this.state.bestSellerPrice }
+                  accounts = { this.state.accounts }
+                  swapContractAddress = { this.state.swapContractAddress }
+                  tokenDaiContract = { this.state.tokenDaiContract }
+                  tokenDaiContractAddress = { this.state.tokenDaiContractAddress }
+                />
+                <SellForm 
+                  serverStatus = { this.state.serverStatus }
+                  bestBuyerPrice = { this.state.bestBuyerPrice }
+                  accounts = { this.state.accounts }
+                  swapContractAddress = { this.state.swapContractAddress }
+                  tokenAlyContract = { this.state.tokenAlyContract }
+                  tokenAlyContractAddress = { this.state.tokenAlyContractAddress }
+                />
+              </div>
+            </div>
+            <div className="MainRight">
+              <Orderbook bestSellerPrice={ this.state.bestSellerPrice } />
+            </div>
           </div>
         </div>
         <Footer />  
