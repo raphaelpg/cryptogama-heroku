@@ -497,8 +497,8 @@ Desktop Styles
     background-color: $darkBackground;
     color: $fontColor;
     border: none;
-    top:1%;
-    right: 1%;
+    top:2%;
+    right: 2%;
     font-size: 15px;
     text-transform: lowercase;
     outline: none;
@@ -527,7 +527,7 @@ Desktop Styles
   }
 
   .faucetForm{
-    margin: 30px 0px 0px 40px;
+    margin: 30px 0px 0px 0px;
     padding: 0 0 0 0;
     display: flex;
     justify-content: space-between;
@@ -556,7 +556,10 @@ Desktop Styles
     transition: all 0.2s;
     outline: none;
     cursor: pointer;
-    width: 90px;
+    width: 120px;
+    height: 40px;
+    border: 1px solid $orangeGama;
+    border-radius: 15px;
   }
 
   .getTokenButton:hover{
@@ -1108,8 +1111,8 @@ Mobile Styles
     background-color: $darkBackground;
     color: $fontColor;
     border: none;
-    top:1%;
-    right: 1%;
+    top:2%;
+    right: 2%;
     font-size: 15px;
     text-transform: lowercase;
     outline: none;
@@ -1168,7 +1171,10 @@ Mobile Styles
     transition: all 0.2s;
     outline: none;
     cursor: pointer;
-    width: 90px;
+    width: 120px;
+    height: 40px;
+    border: 1px solid $orangeGama;
+    border-radius: 15px;
   }
 
   .getTokenButton:hover{

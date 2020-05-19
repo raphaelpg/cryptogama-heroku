@@ -1,5 +1,3 @@
-![Cryptogama title](https://github.com/raphaelpg/Cryptogama/blob/master/images/Title.PNG)
-
 Cryptogama is a decentralized ERC-20 token exchange student project.  
 
 For teaching purposes only, it allows you to place buy and sell orders to exchange two tokens: the ALY and the DAI.
